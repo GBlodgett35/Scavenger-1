@@ -110,6 +110,9 @@ public class BoardManager : MonoBehaviour
                     go = floorTiles[1];
                     Debug.Log("Trigger 6");
                     break;
+                default:
+                    go = floorTiles[0];
+                    break;
             }
             return go;
         }
@@ -158,14 +161,14 @@ public class BoardManager : MonoBehaviour
             c[cCount] = line.ToCharArray();
             cCount++;
             l++;
-            if(l % 8 == 7)
+            if(l % 8 == 0)
             {
                 rooms[roomCount] = new Room(roomCount.ToString(), c, floorTiles, wallTiles, foodTiles, enemyTiles, outerWallTiles);
                 c = new char[8][];
                 cCount = 0;
+                roomCount++;
             }
         }
-        Debug.Log("l: " + l);
         //int[] offset = { 0, 0 };
         //for(int i = 0; i < rooms.Length; i++)
         //{
@@ -209,6 +212,20 @@ public class BoardManager : MonoBehaviour
             rooms[i].thisObj.SetActive(false);
         }
         rooms[roomIndex].thisObj.SetActive(true);
+    }
+
+    public string printChar(char[][] c)
+    {
+        string s = "";
+        for(int i = 0; i < c.Length; i++)
+        {
+            for(int j = 0; j < c[i].Length; j++)
+            {
+                s += c[i][j] + " ";
+            }
+            s += "\n";
+        }
+        return s;
     }
     // Clears our list gridPositions and prepares it to generate a new board.
     void InitialiseList()

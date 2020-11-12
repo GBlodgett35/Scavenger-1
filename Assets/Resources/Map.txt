@@ -4,7 +4,7 @@ X      X
 X      X
 X      2
 X      X
-XP     X
+X      X
 XXXXXXXX
 XXXXXXXX
 X      X

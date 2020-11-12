@@ -1,0 +1,48 @@
+XXXXXXXX
+X      X
+X      X
+X      X
+X      2
+X      X
+XP     X
+XXXXXXXX
+XXXXXXXX
+X      X
+X      3
+1      X
+X      X
+X     ZX
+X      X
+XXXX5XXX
+XXXXXXXX
+X      X
+2      X
+X      X
+X      X
+X      X
+X    Z 4
+XXXX6XXX
+XXXXXXXX
+X   K  X
+X      X
+X      X
+X      X
+X  Z   X
+3      X
+XXXXXXXX
+XXXX2XXX
+X      X
+X      X
+X    Z X
+X      X
+X  Z   X
+X      X
+XXXXXXXX
+XXXX3XXX
+X      X
+X      X
+XxxxxxxX
+X      X
+X    Z X
+X      X
+XXEXXXXX

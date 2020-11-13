@@ -47,7 +47,12 @@ public class Player : MovingObject
         GameManager.instance.playerFoodPoints = food;
     }
 
-
+    public void moveTo(Vector3 position)
+    {
+        Debug.Log("Called moveTo: " + position);
+        this.gameObject.transform.position = position;
+        Debug.Log(this.transform.position);
+    }
     private void Update()
     {
         //If it's not the player's turn, exit the function.

@@ -128,7 +128,7 @@ public class Player : MovingObject
         if (other.tag == "Exit")
         {
             //Invoke the Restart function to start the next level with a delay of restartLevelDelay (default 1 second).
-            Invoke("Restart", restartLevelDelay);
+            //Invoke("Restart", restartLevelDelay);
 
             //Disable the player object since level is over.
             enabled = false;

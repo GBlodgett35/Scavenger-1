@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 public class BoardManager : MonoBehaviour
 {
-    public static int roomNumber;
+    public static int roomNumber = 0;
     public class Room
     {
         public GameObject thisObj;
@@ -59,8 +59,10 @@ public class BoardManager : MonoBehaviour
                 {
                     GameObject toInstantiate = getTileType(roomArr[x][y]);
                    
-                    if(toInstantiate == null)
+                    if(roomArr[x][y] == 'Z')
                     {
+                        GameObject t = Instantiate(floorTiles[0], new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
+                        t.transform.SetParent(boardHolder);
                         //Debug.Log(roomArr[x][y]);
                     }
                     GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
@@ -89,29 +91,28 @@ public class BoardManager : MonoBehaviour
                     go = floorTiles[Random.Range(0, floorTiles.Length)];
                     break;
                 case '1':
-                    roomNumber = 1;
                     go = gate;
+                    go.gameObject.tag = "1";
                     break;
                 case '2':
-                    Debug.Log("2");
                     go = gate;
-                    roomNumber = 2;
+                    go.gameObject.tag = "2";
                     break;
                 case '3':
-                    roomNumber = 3;
                     go = gate;
+                    go.gameObject.tag = "3";
                     break;
                 case '4':
-                    roomNumber = 4;
                     go = gate;
+                    go.gameObject.tag = "4";
                     break;
                 case '5':
-                    roomNumber = 5;
                     go = gate;
+                    go.gameObject.tag = "5";
                     break;
                 case '6':
-                    roomNumber = 6;
                     go = gate;
+                    go.gameObject.tag = "6";
                     break;
                 default:
                     go = floorTiles[0];
@@ -152,7 +153,6 @@ public class BoardManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        roomNumber = 0;
         string[] lines = new string[16];
         string fileName = "Assets/Resources/Map.txt";
         string line = null;
@@ -174,6 +174,7 @@ public class BoardManager : MonoBehaviour
                 roomCount++;
             }
         }
+
         //int[] offset = { 0, 0 };
         //for(int i = 0; i < rooms.Length; i++)
         //{

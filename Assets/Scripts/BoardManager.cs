@@ -6,10 +6,12 @@ using Random = UnityEngine.Random;
 
 public class BoardManager : MonoBehaviour
 {
+    public static int roomNumber;
     public class Room
     {
         public GameObject thisObj;
         public GameObject player;
+        public GameObject gate;
         public GameObject[] floorTiles;
         public GameObject[] wallTiles;
         public GameObject[] foodTiles;
@@ -21,15 +23,16 @@ public class BoardManager : MonoBehaviour
 
         public int columns = 8;
         public int rows = 8;
-        
+
         public Room(
-                        string roomName, 
-                        char[][] roomArr, 
-                        GameObject[] _floorTiles, 
-                        GameObject[] _wallTiles, 
-                        GameObject[] _foodTiles, 
-                        GameObject[] _enemyTiles, 
-                        GameObject[] _outerWallTiles
+                        string roomName,
+                        char[][] roomArr,
+                        GameObject[] _floorTiles,
+                        GameObject[] _wallTiles,
+                        GameObject[] _foodTiles,
+                        GameObject[] _enemyTiles,
+                        GameObject[] _outerWallTiles,
+                        GameObject _gate
                    )
         {
             floorTiles = _floorTiles;
@@ -39,7 +42,7 @@ public class BoardManager : MonoBehaviour
             outerWallTiles = _outerWallTiles;
             gridPositions.Clear();
             player = GameObject.FindGameObjectWithTag("Player");
-
+            gate = _gate;
             for (int x = 1; x < columns - 1; x++)
             {
                 for (int y = 1; y < rows - 1; y++)
@@ -54,12 +57,11 @@ public class BoardManager : MonoBehaviour
             {
                 for (int y = 0; y < rows; y++)
                 {
-                    Debug.Log("X: " + x + ", Y: " + y);
                     GameObject toInstantiate = getTileType(roomArr[x][y]);
                    
                     if(toInstantiate == null)
                     {
-                        Debug.Log(roomArr[x][y]);
+                        //Debug.Log(roomArr[x][y]);
                     }
                     GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
                     instance.transform.SetParent(boardHolder);
@@ -87,28 +89,29 @@ public class BoardManager : MonoBehaviour
                     go = floorTiles[Random.Range(0, floorTiles.Length)];
                     break;
                 case '1':
-                    go = floorTiles[0];
-                    Debug.Log("Trigger 1");
+                    roomNumber = 1;
+                    go = gate;
                     break;
                 case '2':
-                    go = floorTiles[1];
-                    Debug.Log("Trigger 2");
+                    Debug.Log("2");
+                    go = gate;
+                    roomNumber = 2;
                     break;
                 case '3':
-                    go = floorTiles[1];
-                    Debug.Log("Trigger 3");
+                    roomNumber = 3;
+                    go = gate;
                     break;
                 case '4':
-                    go = floorTiles[1];
-                    Debug.Log("Trigger 4");
+                    roomNumber = 4;
+                    go = gate;
                     break;
                 case '5':
-                    go = floorTiles[1];
-                    Debug.Log("Trigger 5");
+                    roomNumber = 5;
+                    go = gate;
                     break;
                 case '6':
-                    go = floorTiles[1];
-                    Debug.Log("Trigger 6");
+                    roomNumber = 6;
+                    go = gate;
                     break;
                 default:
                     go = floorTiles[0];
@@ -136,6 +139,7 @@ public class BoardManager : MonoBehaviour
     public Count wallCount = new Count(5, 9);
     public Count foodCount = new Count(1, 5);
     public GameObject exit;
+    public GameObject gate;
     public GameObject[] floorTiles;
     public GameObject[] wallTiles;
     public GameObject[] foodTiles;
@@ -148,6 +152,7 @@ public class BoardManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        roomNumber = 0;
         string[] lines = new string[16];
         string fileName = "Assets/Resources/Map.txt";
         string line = null;
@@ -163,7 +168,7 @@ public class BoardManager : MonoBehaviour
             l++;
             if(l % 8 == 0)
             {
-                rooms[roomCount] = new Room(roomCount.ToString(), c, floorTiles, wallTiles, foodTiles, enemyTiles, outerWallTiles);
+                rooms[roomCount] = new Room(roomCount.ToString(), c, floorTiles, wallTiles, foodTiles, enemyTiles, outerWallTiles, gate);
                 c = new char[8][];
                 cCount = 0;
                 roomCount++;
@@ -207,6 +212,8 @@ public class BoardManager : MonoBehaviour
 
     public void setActiveRoom(int roomIndex)
     {
+        Debug.Log("Got here: " + roomIndex);
+        roomNumber = roomIndex;
         for(int i = 0; i < rooms.Length; i++)
         {
             rooms[i].thisObj.SetActive(false);

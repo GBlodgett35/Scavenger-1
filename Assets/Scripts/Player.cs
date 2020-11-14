@@ -49,9 +49,9 @@ public class Player : MovingObject
 
     public void moveTo(Vector3 position)
     {
-        Debug.Log("Called moveTo: " + position);
+
         this.gameObject.transform.position = position;
-        Debug.Log(this.transform.position);
+
     }
     private void Update()
     {

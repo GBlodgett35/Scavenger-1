@@ -213,7 +213,6 @@ public class BoardManager : MonoBehaviour
 
     public void setActiveRoom(int roomIndex)
     {
-        Debug.Log("Got here: " + roomIndex);
         roomNumber = roomIndex;
         for(int i = 0; i < rooms.Length; i++)
         {

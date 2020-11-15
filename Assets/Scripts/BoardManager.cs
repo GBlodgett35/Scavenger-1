@@ -13,12 +13,13 @@ public class BoardManager : MonoBehaviour
         public GameObject player;
         public GameObject gate;
         public GameObject exit;
+        public GameObject lockedWall;
         public GameObject[] floorTiles;
         public GameObject[] wallTiles;
         public GameObject[] foodTiles;
         public GameObject[] enemyTiles;
         public GameObject[] outerWallTiles;
-
+        public GameObject key;
         private Transform boardHolder;
         private List<Vector3> gridPositions = new List<Vector3>();
 
@@ -34,7 +35,9 @@ public class BoardManager : MonoBehaviour
                         GameObject[] _enemyTiles,
                         GameObject[] _outerWallTiles,
                         GameObject _gate,
-                        GameObject _exit
+                        GameObject _exit,
+                        GameObject _lockedWall,
+                        GameObject _key
                    )
         {
             floorTiles = _floorTiles;
@@ -46,6 +49,8 @@ public class BoardManager : MonoBehaviour
             player = GameObject.FindGameObjectWithTag("Player");
             gate = _gate;
             exit = _exit;
+            lockedWall = _lockedWall;
+            key = _key;
             for (int x = 1; x < columns - 1; x++)
             {
                 for (int y = 1; y < rows - 1; y++)
@@ -62,7 +67,7 @@ public class BoardManager : MonoBehaviour
                 {
                     GameObject toInstantiate = getTileType(roomArr[x][y]);
                    
-                    if(roomArr[x][y] == 'Z' || roomArr[x][y] == 'F')
+                    if(roomArr[x][y] == 'Z' || roomArr[x][y] == 'F' || roomArr[x][y] == 'x' || roomArr[x][y] == 'K')
                     {
                         GameObject t = Instantiate(floorTiles[0], new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
                         t.transform.SetParent(boardHolder);
@@ -94,6 +99,12 @@ public class BoardManager : MonoBehaviour
                     break;
                 case 'F':
                     go = foodTiles[Random.Range(0, foodTiles.Length)];
+                    break;
+                case 'x':
+                    go = lockedWall;
+                    break;
+                case 'K':
+                    go = key;
                     break;
                 case '1':
                     go = gate;
@@ -146,12 +157,13 @@ public class BoardManager : MonoBehaviour
     public Count foodCount = new Count(1, 5);
     public GameObject exit;
     public GameObject gate;
+    public GameObject lockedWall;
     public GameObject[] floorTiles;
     public GameObject[] wallTiles;
     public GameObject[] foodTiles;
     public GameObject[] enemyTiles;
     public GameObject[] outerWallTiles;
-
+    public GameObject key;
     private Transform boardHolder;
     private List<Vector3> gridPositions = new List<Vector3>();
 
@@ -173,7 +185,7 @@ public class BoardManager : MonoBehaviour
             l++;
             if(l % 8 == 0)
             {
-                rooms[roomCount] = new Room(roomCount.ToString(), c, floorTiles, wallTiles, foodTiles, enemyTiles, outerWallTiles, gate, exit);
+                rooms[roomCount] = new Room(roomCount.ToString(), c, floorTiles, wallTiles, foodTiles, enemyTiles, outerWallTiles, gate, exit, lockedWall, key);
                 c = new char[8][];
                 cCount = 0;
                 roomCount++;

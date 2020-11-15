@@ -7,6 +7,7 @@ using UnityEngine.UI;
 //Player inherits from MovingObject, our base class for objects that can move, Enemy also inherits from this.
 public class Player : MovingObject
 {
+    private bool hasKey = false;
     public float restartLevelDelay = 1f;        // Delay time in seconds to restart level.
     public int pointsPerFood = 10;              // Number of points to add to player food points when picking up a food object.
     public int pointsPerSoda = 20;              // Number of points to add to player food points when picking up a soda object.
@@ -118,15 +119,26 @@ public class Player : MovingObject
     //It takes a generic parameter T which in the case of Player is a Wall which the player can attack and destroy.
     protected override void OnCantMove<T>(T component)
     {
-        Debug.Log("Player onCan'tMove called");
         //Set hitWall to equal the component passed in as a parameter.
         Wall hitWall = component as Wall;
+        if(hitWall.gameObject.tag == "LockedWall")
+        {
+            if(hasKey)
+            {
+                GameObject[] g = GameObject.FindGameObjectsWithTag("LockedWall");
+                foreach(GameObject game in g)
+                {
+                    Destroy(game);
+                }
+            }
+        }else
+        {
+            //Call the DamageWall function of the Wall we are hitting.
+            hitWall.DamageWall(wallDamage);
 
-        //Call the DamageWall function of the Wall we are hitting.
-        hitWall.DamageWall(wallDamage);
-
-        //Set the attack trigger of the player's animation controller in order to play the player's attack animation.
-        animator.SetTrigger("playerChop");
+            //Set the attack trigger of the player's animation controller in order to play the player's attack animation.
+            animator.SetTrigger("playerChop");
+        }
     }
 
     // OnTriggerEnter2D is sent when another object enters a trigger collider attached to this object (2D physics only).
@@ -141,7 +153,11 @@ public class Player : MovingObject
             //Disable the player object since level is over.
             enabled = false;
         }
-
+        else if(other.tag == "Key")
+        {
+            hasKey = true;
+            Destroy(other.gameObject);
+        }
         //Check if the tag of the trigger collided with is Food.
         else if (other.tag == "Food")
         {

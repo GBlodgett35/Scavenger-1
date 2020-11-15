@@ -64,7 +64,7 @@ public class Gate : MonoBehaviour
                 }
                 break;
             case 3:
-                coords = new Vector3(1, 6, 0);
+                coords = new Vector3(6, 6, 0);
                 break;
             case 4:
                 coords = new Vector3(6, 3, 0);

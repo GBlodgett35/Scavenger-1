@@ -79,6 +79,10 @@ public class Enemy : MovingObject
     //and takes a generic parameter T which we use to pass in the component we expect to encounter, in this case Player
     protected override void OnCantMove<T>(T component)
     {
+        if (!isActiveAndEnabled)
+        {
+            return;
+        }
         //Declare hitPlayer and set it to equal the encountered component.
         Player hitPlayer = component as Player;
 

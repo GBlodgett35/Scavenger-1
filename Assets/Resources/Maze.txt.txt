@@ -7,11 +7,11 @@ X      X X     ZX X      X X  Z   X
 XP     X X      X X    Z 4 3      X
 XXXXXXXX XXXX5XXX XXXX6XXX XXXXXXXX
 
-        XXXX2XXX XXXX3XXX
-        X      X X      X
-        X      X X      X
-        X    Z X XxxxxxxX
-        X      X X      X
-        X      X X  Z   X
-        X  Z   X X      X
-        XXXXXXXX XXEXXXXX
+         XXXX2XXX XXXX3XXX
+         X      X X      X
+         X      X X      X
+         X    Z X XxxxxxxX
+         X      X X      X
+         X      X X  Z   X
+         X  Z   X X      X
+         XXXXXXXX XXEXXXXX

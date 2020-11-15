@@ -1,41 +1,41 @@
 XXXXXXXX
 X      X
 X      X
-X      X
+X   F  X
 X      2
 X      X
 X      X
 XXXXXXXX
 XXXXXXXX
 X      X
-3      X
+X      3
 X      X
-X      1
-X    Z X
+1 F    X
+X    z X
 X      X
 XXX5XXXX
 XXXXXXXX
-X      X
+X  F   X
 2      X
 X      X
 X      X
 X      X
-X    Z 4
+XF   z 4
 XXXX6XXX
 XXXXXXXX
 X   K  X
 X      X
 X      X
 X      X
-X  Z   X
+X  z   X
 3      X
 XXXXXXXX
 XXXX2XXX
 X      X
+X  F   X
+X    z X
 X      X
-X    Z X
-X      X
-X  Z   X
+X  z   X
 X      X
 XXXXXXXX
 XXXX3XXX
@@ -43,6 +43,6 @@ X      X
 X      X
 XxxxxxxX
 X      X
-X    Z X
+X    z X
 X      X
 XXEXXXXX

@@ -94,7 +94,6 @@ public class GameManager : MonoBehaviour
         enemies.Clear();
 
         //Call the SetupScene function of the BoardManager script, pass it current level number.
-        boardScript.SetupScene(level);
     }
 
 

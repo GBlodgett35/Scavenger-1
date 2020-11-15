@@ -13,11 +13,14 @@ namespace Completed
 		
 		private Animator animator;							//Variable of type Animator to store a reference to the enemy's Animator component.
 		private Transform target;							//Transform to attempt to move toward each turn.
-		private bool skipMove;								//Boolean to determine whether or not enemy should skip a turn or move this turn.
-		
-		
-		//Start overrides the virtual Start function of the base class.
-		protected override void Start ()
+		private bool skipMove;                              //Boolean to determine whether or not enemy should skip a turn or move this turn.
+
+        public void OnDisable()
+        {
+            StopCoroutine("SmoothMovement");
+        }
+        //Start overrides the virtual Start function of the base class.
+        protected override void Start ()
 		{
 			//Register this enemy with our instance of GameManager by adding it to a list of Enemy objects. 
 			//This allows the GameManager to issue movement commands.
@@ -28,7 +31,7 @@ namespace Completed
 			
 			//Find the Player GameObject using it's tag and store a reference to its transform component.
 			target = GameObject.FindGameObjectWithTag ("Player").transform;
-			
+            Debug.Log(target);
 			//Call the start function of our base class MovingObject.
 			base.Start ();
 		}
@@ -82,6 +85,11 @@ namespace Completed
 		//and takes a generic parameter T which we use to pass in the component we expect to encounter, in this case Player
 		protected override void OnCantMove <T> (T component)
 		{
+            Debug.Log("Enemy Attack");
+            if(!isActiveAndEnabled)
+            {
+                return;
+            }
 			//Declare hitPlayer and set it to equal the encountered component.
 			Player hitPlayer = component as Player;
 			

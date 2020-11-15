@@ -34,7 +34,6 @@ public class Player : MovingObject
         //Get the current food point total stored in GameManager.instance between levels.
         food = GameManager.instance.playerFoodPoints;
         foodText.text = "Food: " + food;
-       
         //Call the Start function of the MovingObject base class.
         base.Start();
     }
@@ -49,9 +48,11 @@ public class Player : MovingObject
 
     public void moveTo(Vector3 position)
     {
+        setMoving(false);
+        StopCoroutine(co);
 
         this.gameObject.transform.position = position;
-
+        GetComponent<Rigidbody2D>().MovePosition(position);
     }
     private void Update()
     {
@@ -86,6 +87,7 @@ public class Player : MovingObject
     //AttemptMove takes a generic parameter T which for Player will be of the type Wall, it also takes integers for x and y direction to move in.
     protected override void AttemptMove<T>(int xDir, int yDir)
     {
+
         //Every time player moves, subtract from food points total.
         food--;
 
@@ -116,6 +118,7 @@ public class Player : MovingObject
     //It takes a generic parameter T which in the case of Player is a Wall which the player can attack and destroy.
     protected override void OnCantMove<T>(T component)
     {
+        Debug.Log("Player onCan'tMove called");
         //Set hitWall to equal the component passed in as a parameter.
         Wall hitWall = component as Wall;
 
@@ -150,7 +153,7 @@ public class Player : MovingObject
             SoundManager.instance.RandomizeSfx(eatSound1, eatSound2);
 
             // Hide the food object the player collided with
-            other.gameObject.SetActive(false);
+            Destroy(other.gameObject);
         }
 
         //Check if the tag of the trigger collided with is Soda.
@@ -164,7 +167,7 @@ public class Player : MovingObject
             SoundManager.instance.RandomizeSfx(drinkSound1, drinkSound2);
 
             //Disable the soda object the player collided with.
-            other.gameObject.SetActive(false);
+            Destroy(other.gameObject);
         }
     }
 

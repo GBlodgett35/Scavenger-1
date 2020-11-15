@@ -12,6 +12,7 @@ public class BoardManager : MonoBehaviour
         public GameObject thisObj;
         public GameObject player;
         public GameObject gate;
+        public GameObject exit;
         public GameObject[] floorTiles;
         public GameObject[] wallTiles;
         public GameObject[] foodTiles;
@@ -32,7 +33,8 @@ public class BoardManager : MonoBehaviour
                         GameObject[] _foodTiles,
                         GameObject[] _enemyTiles,
                         GameObject[] _outerWallTiles,
-                        GameObject _gate
+                        GameObject _gate,
+                        GameObject _exit
                    )
         {
             floorTiles = _floorTiles;
@@ -43,6 +45,7 @@ public class BoardManager : MonoBehaviour
             gridPositions.Clear();
             player = GameObject.FindGameObjectWithTag("Player");
             gate = _gate;
+            exit = _exit;
             for (int x = 1; x < columns - 1; x++)
             {
                 for (int y = 1; y < rows - 1; y++)
@@ -59,11 +62,10 @@ public class BoardManager : MonoBehaviour
                 {
                     GameObject toInstantiate = getTileType(roomArr[x][y]);
                    
-                    if(roomArr[x][y] == 'Z')
+                    if(roomArr[x][y] == 'Z' || roomArr[x][y] == 'F')
                     {
                         GameObject t = Instantiate(floorTiles[0], new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
                         t.transform.SetParent(boardHolder);
-                        //Debug.Log(roomArr[x][y]);
                     }
                     GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
                     instance.transform.SetParent(boardHolder);
@@ -81,14 +83,17 @@ public class BoardManager : MonoBehaviour
                 case 'X':
                     go = outerWallTiles[Random.Range(0, outerWallTiles.Length)];
                     break;
-                case 'P':
-                    go = player;
+                case 'E':
+                    go = exit;
                     break;
                 case 'Z':
                     go = enemyTiles[Random.Range(0, enemyTiles.Length)];
                     break;
                 case ' ':
                     go = floorTiles[Random.Range(0, floorTiles.Length)];
+                    break;
+                case 'F':
+                    go = foodTiles[Random.Range(0, foodTiles.Length)];
                     break;
                 case '1':
                     go = gate;
@@ -168,141 +173,38 @@ public class BoardManager : MonoBehaviour
             l++;
             if(l % 8 == 0)
             {
-                rooms[roomCount] = new Room(roomCount.ToString(), c, floorTiles, wallTiles, foodTiles, enemyTiles, outerWallTiles, gate);
+                rooms[roomCount] = new Room(roomCount.ToString(), c, floorTiles, wallTiles, foodTiles, enemyTiles, outerWallTiles, gate, exit);
                 c = new char[8][];
                 cCount = 0;
                 roomCount++;
             }
         }
+        
 
-        //int[] offset = { 0, 0 };
-        //for(int i = 0; i < rooms.Length; i++)
-        //{
-        //    if(offset[0] >= lines[0].Length)
-        //    {
-        //        int y = offset[1];
-        //        offset[1] = y + 1;
-        //        offset[0] = 0;
-        //    }
-        //    char[][] roomArr = new char[8][];
-        //    for(int j = 0; j < 8; j++)
-        //    {
-        //        if(lines[i][offset[0]] == ' ')
-        //        {
-        //            i--;
-        //            break;
-        //        }
-        //        Debug.Log("Offset: " + (offset[0] + 8) + ", lines[0]: " + lines[0].Length);
-        //        roomArr[j] = lines[i].Substring(offset[0], offset[0] + 8).ToCharArray();
-        //        Debug.Log("roomArr length: " + roomArr[j].Length);
-        //    }
-        //    rooms[i] = new Room(i.ToString(), roomArr, floorTiles, wallTiles, foodTiles, enemyTiles, outerWallTiles);
-        //    offset[0] += 8;
-        //}
-
-        setActiveRoom(0);
-
-       // for (int x = 1; x < columns - 1; x++)
-        //{
-          //  for (int y = 1; y < rows - 1; y++)
-            //{
-              //  gridPositions.Add(new Vector3(x, y, 0f));
-            //}
-        //}
+        setActiveRoom(0);       
     }
-
+    public void SetActiveRecursivelyExt(GameObject obj, bool state)
+    {
+        obj.SetActive(state);
+        foreach (Transform child in obj.transform)
+        {
+            SetActiveRecursivelyExt(child.gameObject, state);
+        }
+    }
     public void setActiveRoom(int roomIndex)
     {
+
         roomNumber = roomIndex;
         for(int i = 0; i < rooms.Length; i++)
         {
             rooms[i].thisObj.SetActive(false);
         }
-        rooms[roomIndex].thisObj.SetActive(true);
+        SetActiveRecursivelyExt(rooms[roomIndex].thisObj, true);
+        
     }
 
-    public string printChar(char[][] c)
-    {
-        string s = "";
-        for(int i = 0; i < c.Length; i++)
-        {
-            for(int j = 0; j < c[i].Length; j++)
-            {
-                s += c[i][j] + " ";
-            }
-            s += "\n";
-        }
-        return s;
-    }
-    // Clears our list gridPositions and prepares it to generate a new board.
-    void InitialiseList()
-    {
-        // Clear our list gridPositions.
-        //gridPositions.Clear();
-
-        // Loop through x axis (columns).
-        //for (int x = 1; x < columns - 1; x++)
-        //{
-            // Within each column, loop through y axis (rows).
-            //for (int y = 1; y < rows - 1; y++)
-            //{
-                // At each index add a new Vector3 to our list with the x and y coordinates of that position.
-               // gridPositions.Add(new Vector3(x, y, 0f));
-            //}
-        //}
-    }
-
-    void BoardSetup()
-    {
-        //boardHolder = new GameObject("Board").transform;
-
-        //for (int x = -1; x < columns + 1; x++)
-        //{
-        //    for (int y = -1; y < rows + 1; y++)
-        //    {
-        //        GameObject toInstantiate = floorTiles[Random.Range(0, floorTiles.Length)];
-        //        if (x == -1 || x == columns || y == -1 || y == rows)
-        //        {
-        //            toInstantiate = outerWallTiles[Random.Range(0, outerWallTiles.Length)];
-        //        }
-
-        //        GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
-        //        instance.transform.SetParent(boardHolder);
-
-        //    }
-        //}
-    }
-
-    Vector3 RandomPosition()
-    {
-        int randomIndex = Random.Range(0, gridPositions.Count);
-        Vector3 randomPosition = gridPositions[randomIndex];
-        gridPositions.RemoveAt(randomIndex);
-        return randomPosition;
-    }
-
-    void LayoutObjectAtRandom(GameObject[] tiles, int minmum, int maximum)
-    {
-        int objectCount = Random.Range(minmum, maximum + 1);
-
-        for (int i = 0; i < objectCount; i++)
-        {
-            Vector3 randomPos = RandomPosition();
-            GameObject tileChoice = tiles[Random.Range(0, tiles.Length)];
-            Instantiate(tileChoice, randomPos, Quaternion.identity);
-        }
-    }
-
-    public void SetupScene(int level)
-    {
-        //BoardSetup();
-        //InitialiseList();
-        //LayoutObjectAtRandom(wallTiles, wallCount.minimum, wallCount.maximum);
-        //LayoutObjectAtRandom(foodTiles, foodCount.minimum, foodCount.maximum);
-        //int enemyCount = (int)Mathf.Log(level, 2f);
-        //LayoutObjectAtRandom(enemyTiles, enemyCount, enemyCount);
-        //Instantiate(exit, new Vector3(columns - 1, rows - 1, 0f), Quaternion.identity);
-    }
+   
+    
 
     // Update is called once per frame
     void Update()

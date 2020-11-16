@@ -80,9 +80,8 @@ public class GameManager : MonoBehaviour
 
         //Get a reference to our text LevelText's text component by finding it by name and calling GetComponent.
         levelText = GameObject.Find("LevelText").GetComponent<Text>();
-
+        levelText.text = "Find your way out of the dungeon";
         //Set the text of levelText to the string "Day" and append the current level number.
-        levelText.text = "Day " + level;
 
         //Set levelImage to active blocking player's view of the game board during setup.
         levelImage.SetActive(true);
@@ -132,7 +131,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         //Set levelText to display number of levels passed and game over message
-        levelText.text = "After " + level + " days, you starved.";
+        levelText.text = "You starved in the dungeon.";
 
         //Enable black background image gameObject.
         levelImage.SetActive(true);

@@ -67,7 +67,11 @@ public class BoardManager : MonoBehaviour
                 {
                     GameObject toInstantiate = getTileType(roomArr[x][y]);
                    
-                    if(roomArr[x][y] == 'Z' || roomArr[x][y] == 'F' || roomArr[x][y] == 'x' || roomArr[x][y] == 'K')
+                    if(roomArr[x][y] == 'Z' || 
+                       roomArr[x][y] == 'F' || 
+                       roomArr[x][y] == 'x' || 
+                       roomArr[x][y] == 'K' ||
+                       roomArr[x][y] == 'W')
                     {
                         GameObject t = Instantiate(floorTiles[0], new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
                         t.transform.SetParent(boardHolder);
@@ -93,6 +97,9 @@ public class BoardManager : MonoBehaviour
                     break;
                 case 'Z':
                     go = enemyTiles[Random.Range(0, enemyTiles.Length)];
+                    break;
+                case 'W':
+                    go = wallTiles[Random.Range(0, wallTiles.Length)];
                     break;
                 case ' ':
                     go = floorTiles[Random.Range(0, floorTiles.Length)];

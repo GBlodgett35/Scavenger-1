@@ -1,45 +1,45 @@
 XXXXXXXX
 X      X
-X      X
+X  W   X
 X   F  X
-X      2
+X   W  2
 X      X
 X      X
 XXXXXXXX
 XXXXXXXX
-X      X
+X  W   X
 X      3
 X      X
 1 F    X
-X    z X
-X      X
+X    Z X
+X  W   X
 XXX5XXXX
 XXXXXXXX
 X  F   X
 2      X
+X   W  X
 X      X
-X      X
-X      X
-XF   z 4
+X W    X
+XF   Z 4
 XXXX6XXX
 XXXXXXXX
 X   K  X
 X      X
+X  WW  X
 X      X
-X      X
-X  z   X
+X  Z   X
 3      X
 XXXXXXXX
 XXXX2XXX
-X      X
+X     WX
 X  F   X
-X    z X
-X      X
-X  z   X
+X    Z X
+X W   WX
+X  Z   X
 X      X
 XXXXXXXX
 XXXX3XXX
-X      X
+X  W   X
 X      X
 XxxxxxxX
 X      X

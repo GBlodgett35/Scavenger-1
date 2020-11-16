@@ -113,7 +113,7 @@ public class Player : MovingObject
         //Set the playersTurn boolean of GameManager to false now that players turn is over.
         GameManager.instance.playersTurn = false;
     }
-
+  
 
     //OnCantMove overrides the abstract function OnCantMove in MovingObject.
     //It takes a generic parameter T which in the case of Player is a Wall which the player can attack and destroy.
@@ -121,6 +121,13 @@ public class Player : MovingObject
     {
         //Set hitWall to equal the component passed in as a parameter.
         Wall hitWall = component as Wall;
+        //If we hit an Enemy instead of a wall
+        if(hitWall == null)
+        {
+            Enemy e = component as Enemy;
+            e.damage(5);
+            return;
+        }
         if(hitWall.gameObject.tag == "LockedWall")
         {
             if(hasKey)
@@ -149,7 +156,7 @@ public class Player : MovingObject
         {
             //Invoke the Restart function to start the next level with a delay of restartLevelDelay (default 1 second).
             //Invoke("Restart", restartLevelDelay);
-
+            Application.Quit();
             //Disable the player object since level is over.
             enabled = false;
         }

@@ -14,7 +14,7 @@ public class Gate : MonoBehaviour
         if(enabled)
         {
             int room = int.Parse(this.gameObject.tag) - 1;
-            Debug.Log(room+ 1);
+
             
             StopCoroutine(MovingObject.co);
             player.transform.position = getStartCoords(fromRoom, room);

@@ -8,6 +8,7 @@ public class Enemy : MovingObject
     public AudioClip enemyAttack1;
     public AudioClip enemyAttack2;
 
+    public int points;                                  //How many points the player gets for killing this Zombie
     public int health;
     private Animator animator;                            //Variable of type Animator to store a reference to the enemy's Animator component.
     private Transform target;                            //Transform to attempt to move toward each turn.
@@ -15,17 +16,30 @@ public class Enemy : MovingObject
 
     public void damage(int damage)
     {
-        Debug.Log("damage called");
+
         health -= damage;
+        CheckIfDead();
     }
 
+    public void CheckIfDead()
+    {
+        if(health < 0)
+        {
+            gameObject.SetActive(false);
+            Destroy(gameObject);
+            GameManager.instance.SendMessage("AddPoints", points);
+        }
+    }
+    public new void OnDisable()
+    {
+        StopAllCoroutines();
+    }
     //Start overrides the virtual Start function of the base class.
     protected override void Start()
     {
         //Register this enemy with our instance of GameManager by adding it to a list of Enemy objects. 
         //This allows the GameManager to issue movement commands.
         GameManager.instance.AddEnemyToList(this);
-
         //Get and store a reference to the attached Animator component.
         animator = GetComponent<Animator>();
 
@@ -67,7 +81,10 @@ public class Enemy : MovingObject
         //These values allow us to choose between the cardinal directions: up, down, left and right.
         int xDir = 0;
         int yDir = 0;
-
+        if (this == null) 
+        {
+            return;
+        }
         // Is enemy and player in the same column?
         if (Mathf.Abs(target.position.x - transform.position.x) < float.Epsilon)
         {

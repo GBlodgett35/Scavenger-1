@@ -12,8 +12,9 @@ public class GameManager : MonoBehaviour
     public static GameManager instance = null;                //Static instance of GameManager which allows it to be accessed by any other script.
     [HideInInspector] public bool playersTurn = true;        //Boolean to check if it's players turn, hidden in inspector but public.
 
-
+    private int points = 0;
     private Text levelText;                                    //Text to display current level number.
+    public Text pointsText;
     private GameObject levelImage;                            //Image to block out level as levels are being set up, background for levelText.
     private BoardManager boardScript;                        //Store a reference to our BoardManager which will set up the level.
     private int level = 0;                                    //Current level number, expressed in game as "Day 1".
@@ -42,7 +43,7 @@ public class GameManager : MonoBehaviour
 
         //Assign enemies to a new List of Enemy objects.
         enemies = new List<Enemy>();
-
+        pointsText.text = "0";
         //Get a component reference to the attached BoardManager script
         boardScript = GetComponent<BoardManager>();
     }
@@ -62,6 +63,12 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
     }
 
+    public void AddPoints(int p)
+    {
+        points += p;
+        pointsText.text = points.ToString();
+    }
+
     void OnDisable()
     {
         // Stop listening for a scene change event as soon as this script is disabled
@@ -77,7 +84,7 @@ public class GameManager : MonoBehaviour
 
         //Get a reference to our image LevelImage by finding it by name.
         levelImage = GameObject.Find("LevelImage");
-
+        pointsText = GameObject.Find("Points").GetComponent<Text>();
         //Get a reference to our text LevelText's text component by finding it by name and calling GetComponent.
         levelText = GameObject.Find("LevelText").GetComponent<Text>();
         levelText.text = "Find your way out of the dungeon";

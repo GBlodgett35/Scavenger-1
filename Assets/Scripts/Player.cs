@@ -113,12 +113,13 @@ public class Player : MovingObject
         //Set the playersTurn boolean of GameManager to false now that players turn is over.
         GameManager.instance.playersTurn = false;
     }
-  
+    
 
     //OnCantMove overrides the abstract function OnCantMove in MovingObject.
     //It takes a generic parameter T which in the case of Player is a Wall which the player can attack and destroy.
     protected override void OnCantMove<T>(T component)
     {
+
         //Set hitWall to equal the component passed in as a parameter.
         Wall hitWall = component as Wall;
         //If we hit an Enemy instead of a wall

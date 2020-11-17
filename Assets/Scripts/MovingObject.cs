@@ -39,7 +39,7 @@ public abstract class MovingObject : MonoBehaviour
     //Move takes parameters for x direction, y direction and a RaycastHit2D to check collision.
     protected bool Move(int xDir, int yDir, out RaycastHit2D hit)
     {
-        
+
         //Store start position to move from, based on objects current transform position.
         Vector2 start = transform.position;
 
@@ -58,6 +58,7 @@ public abstract class MovingObject : MonoBehaviour
         //Check if anything was hit
         if (isActiveAndEnabled && hit.transform == null && !isMoving)
         {
+
             //If nothing was hit, start SmoothMovement co-routine passing in the Vector2 end as destination
             co = StartCoroutine(SmoothMovement(end));
 
@@ -123,12 +124,23 @@ public abstract class MovingObject : MonoBehaviour
 
         //Get a component reference to the component of type T attached to the object that was hit
         T hitComponent = hit.transform.GetComponent<T>();
-
+        //If it's not a wall, try with an enemy
+        Enemy e = null;
+        if (hitComponent == null)
+        {
+            e = hit.transform.GetComponent<Enemy>();
+        }
         //If canMove is false and hitComponent is not equal to null, meaning MovingObject is blocked and has hit something it can interact with.
-        if (!canMove && hitComponent != null)
+        if (!canMove && (hitComponent != null || e != null))
+            if(e != null)
+            {
+                OnCantMove(e);
+            } else
+            {
 
-            //Call the OnCantMove function and pass it hitComponent as a parameter.
-            OnCantMove(hitComponent);
+                //Call the OnCantMove function and pass it hitComponent as a parameter.
+                OnCantMove(hitComponent);
+            }
     }
 
 

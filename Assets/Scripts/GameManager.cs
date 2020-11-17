@@ -16,16 +16,33 @@ public class GameManager : MonoBehaviour
     private Text levelText;                                    //Text to display current level number.
     public Text pointsText;
     private GameObject levelImage;                            //Image to block out level as levels are being set up, background for levelText.
-    private BoardManager boardScript;                        //Store a reference to our BoardManager which will set up the level.
+    public BoardManager boardScript;                        //Store a reference to our BoardManager which will set up the level.
     private int level = 0;                                    //Current level number, expressed in game as "Day 1".
     private List<Enemy> enemies;                            //List of all Enemy units, used to issue them move commands.
     private bool enemiesMoving;                                //Boolean to check if enemies are moving.
     private bool doingSetup = true;                            //Boolean to check if we're setting up board, prevent Player from moving during setup.
+    private bool flag = true;
 
-
+    public void wonGame()
+    {
+        StartCoroutine(FinishedGame());
+    }
+    public IEnumerator FinishedGame()
+    {
+        Debug.Log("FinishedGame Called");
+        levelImage.SetActive(true);
+        levelText.text = "Final Score: " + points;
+        Invoke("HideLevelImage", levelStartDelay);
+        if (flag)
+        {
+            yield return new WaitForSeconds(1.75f);
+            flag = false;
+        }
+        SceneManager.LoadScene(0);
+    }
 
     //Awake is always called before any Start functions
-    void Awake()
+    public void Awake()
     {
         // Singleton logic
         if (instance == null)
@@ -40,19 +57,37 @@ public class GameManager : MonoBehaviour
 
         //Sets this to not be destroyed when reloading scene
         DontDestroyOnLoad(gameObject);
-
         //Assign enemies to a new List of Enemy objects.
         enemies = new List<Enemy>();
-        pointsText.text = "0";
+        pointsText.text = "Score: 0";
         //Get a component reference to the attached BoardManager script
         boardScript = GetComponent<BoardManager>();
     }
 
+    public void RestartGame()
+    {
+        playerFoodPoints = 100;
+        boardScript = GetComponent<BoardManager>();
+        boardScript.Invoke("Start", 0f);
+        points = 0;
+        flag = true;
+        doingSetup = true;
+    }
+
+    public void AddPoints(int p)
+    {
+        Debug.Log("Add points called with: " + p);
+        points += p;
+        Debug.Log(points);
+        pointsText.text = "Score: " + points.ToString();
+    }
     //This is called each time a scene is loaded.
     void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
+        if (scene.buildIndex != 1) return;
         // Add one so when Scene is reloaded we'll move to the next level
         level++;
+        Debug.Log("Level finished");
 
         InitGame();
     }
@@ -63,17 +98,11 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
     }
 
-    public void AddPoints(int p)
-    {
-        points += p;
-        pointsText.text = points.ToString();
-    }
-
     void OnDisable()
     {
         // Stop listening for a scene change event as soon as this script is disabled
         // Remember to always have an unsubscription for every event you subscribe to!
-        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+       // SceneManager.sceneLoaded -= OnLevelFinishedLoading;
     }
 
     //Initializes the game for each level.
@@ -89,7 +118,8 @@ public class GameManager : MonoBehaviour
         levelText = GameObject.Find("LevelText").GetComponent<Text>();
         levelText.text = "Find your way out of the dungeon";
         //Set the text of levelText to the string "Day" and append the current level number.
-
+        //Awake();
+        //DontDestroyOnLoad(Canvas);
         //Set levelImage to active blocking player's view of the game board during setup.
         levelImage.SetActive(true);
 
@@ -106,6 +136,7 @@ public class GameManager : MonoBehaviour
     //Hides black image used between levels
     void HideLevelImage()
     {
+        if (levelImage == null) return;
         //Disable the levelImage gameObject.
         levelImage.SetActive(false);
 
@@ -145,6 +176,8 @@ public class GameManager : MonoBehaviour
 
         //Disable this GameManager.
         enabled = false;
+
+        SceneManager.LoadScene(0);
     }
 
     //Coroutine to move enemies in sequence.

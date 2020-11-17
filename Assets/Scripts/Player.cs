@@ -41,7 +41,7 @@ public class Player : MovingObject
 
 
     //This function is called when the behaviour becomes disabled or inactive.
-    private void OnDisable()
+    private new void OnDisable()
     {
         //When Player object is disabled, store the current local food total in the GameManager so it can be re-loaded in next level.
         GameManager.instance.playerFoodPoints = food;
@@ -155,9 +155,9 @@ public class Player : MovingObject
         //Check if the tag of the trigger collided with is Exit.
         if (other.tag == "Exit")
         {
-            //Invoke the Restart function to start the next level with a delay of restartLevelDelay (default 1 second).
-            //Invoke("Restart", restartLevelDelay);
-            Application.Quit();
+
+            GameManager.instance.wonGame();
+
             //Disable the player object since level is over.
             enabled = false;
         }

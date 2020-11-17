@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(1.75f);
             flag = false;
         }
-        SceneManager.LoadScene(0);
+        Application.Quit();
     }
 
     //Awake is always called before any Start functions
@@ -177,7 +177,7 @@ public class GameManager : MonoBehaviour
         //Disable this GameManager.
         enabled = false;
 
-        SceneManager.LoadScene(0);
+        GameOver();
     }
 
     //Coroutine to move enemies in sequence.

@@ -76,9 +76,7 @@ public class GameManager : MonoBehaviour
 
     public void AddPoints(int p)
     {
-        Debug.Log("Add points called with: " + p);
         points += p;
-        Debug.Log(points);
         pointsText.text = "Score: " + points.ToString();
     }
     //This is called each time a scene is loaded.
@@ -87,7 +85,6 @@ public class GameManager : MonoBehaviour
         if (scene.buildIndex != 1) return;
         // Add one so when Scene is reloaded we'll move to the next level
         level++;
-        Debug.Log("Level finished");
 
         InitGame();
     }

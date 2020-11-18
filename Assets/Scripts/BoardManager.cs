@@ -219,7 +219,9 @@ public class BoardManager : MonoBehaviour
             rooms[i].thisObj.SetActive(false);
         }
         SetActiveRecursivelyExt(rooms[roomIndex].thisObj, true);
-        
+
+
+       // gate.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255);
     }
 
    

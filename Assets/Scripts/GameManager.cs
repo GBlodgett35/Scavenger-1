@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    private bool playerDead = false;
     public float levelStartDelay = 2f;                        //Time to wait before starting level, in seconds.
     public float turnDelay = 0.1f;                            //Delay between each Player turn.
     public int playerFoodPoints = 100;                        //Starting value for Player food points.
@@ -29,9 +30,14 @@ public class GameManager : MonoBehaviour
     }
     public IEnumerator FinishedGame()
     {
-        Debug.Log("FinishedGame Called");
         levelImage.SetActive(true);
-        levelText.text = "Final Score: " + points;
+        if(playerDead)
+        {
+            levelText.text = "You starved to death in the dungeon\nFinal Score: " + points;
+        } else
+        {
+            levelText.text = "Final Score: " + points;
+        }
         Invoke("HideLevelImage", levelStartDelay);
         if (flag)
         {
@@ -167,15 +173,17 @@ public class GameManager : MonoBehaviour
     {
         //Set levelText to display number of levels passed and game over message
         levelText.text = "You starved in the dungeon.";
-
+        playerDead = true;
         //Enable black background image gameObject.
         levelImage.SetActive(true);
-
+        Invoke("HideLevelImage", 2f);
         //Disable this GameManager.
+        //enabled = false;
+        StartCoroutine(FinishedGame());
         enabled = false;
 
-        GameOver();
     }
+
 
     //Coroutine to move enemies in sequence.
     IEnumerator MoveEnemies()

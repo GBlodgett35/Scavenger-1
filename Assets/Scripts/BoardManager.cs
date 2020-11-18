@@ -177,7 +177,6 @@ public class BoardManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Start");
         string[] lines = new string[16];
         string fileName = "Assets/Resources/Map.txt";
         string line = null;

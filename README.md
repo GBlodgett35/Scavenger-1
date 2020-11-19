@@ -9,6 +9,14 @@ Instuctor: Dr. McCown
 
 Due Date: 11/20/2020
 
+This is a game that requires the player to escape a dungeon before they starve to death (Their food points go to zero). There are various objects the player can pick up:
+
+- Food: Regain food points
+- Soda: Regain food points
+- Key: Allows you to pass through a locked wall
+- Sword: Doubles the players damage
+
+There are zombies in the maze that will attack the player and take away their food points. The player can attack back, however, and they get points for every zombie they kill.
 
 
 ## Requirements

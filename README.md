@@ -2,9 +2,14 @@
 Unity Scavenger game based on Unity tutorial [2D Roguelike](https://learn.unity.com/project/2d-roguelike-tutorial?uv=5.x).
 
 Authors: Greg Blodgett and Diego Pina
+
 Class: Game Development 
+
 Instuctor: Dr. McCown
+
 Due Date: 11/20/2020
+
+
 
 ## Requirements
 1. Your game should use a single multi-screen map that you've created in a text file. The map file should reside in your project's Resources directory. The map should have at least 6 different parts. The player can enter each part through an opening in the wall, but bad guys are not allowed through openings. The game ends when the player reaches the exit.
@@ -31,4 +36,4 @@ Greg:
 Diege:
 - Main menu screen
 - Third Zombie
-- Indirect guidance
+- Indirect guidance (Doorways turn a different color after going through, which helps direct players to parts of the maze they haven't explored)

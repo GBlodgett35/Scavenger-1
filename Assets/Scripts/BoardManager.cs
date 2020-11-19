@@ -20,6 +20,7 @@ public class BoardManager : MonoBehaviour
         public GameObject[] enemyTiles;
         public GameObject[] outerWallTiles;
         public GameObject key;
+        public GameObject sword;
         private Transform boardHolder;
         private List<Vector3> gridPositions = new List<Vector3>();
 
@@ -37,7 +38,8 @@ public class BoardManager : MonoBehaviour
                         GameObject _gate,
                         GameObject _exit,
                         GameObject _lockedWall,
-                        GameObject _key
+                        GameObject _key,
+                        GameObject _sword
                    )
         {
             floorTiles = _floorTiles;
@@ -51,6 +53,7 @@ public class BoardManager : MonoBehaviour
             exit = _exit;
             lockedWall = _lockedWall;
             key = _key;
+            sword = _sword;
             for (int x = 1; x < columns - 1; x++)
             {
                 for (int y = 1; y < rows - 1; y++)
@@ -71,7 +74,8 @@ public class BoardManager : MonoBehaviour
                        roomArr[x][y] == 'F' || 
                        roomArr[x][y] == 'x' || 
                        roomArr[x][y] == 'K' ||
-                       roomArr[x][y] == 'W')
+                       roomArr[x][y] == 'W' ||
+                       roomArr[x][y] == 'S')
                     {
                         GameObject t = Instantiate(floorTiles[0], new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
                         t.transform.SetParent(boardHolder);
@@ -109,6 +113,9 @@ public class BoardManager : MonoBehaviour
                     break;
                 case 'x':
                     go = lockedWall;
+                    break;
+                case 'S':
+                    go = sword;
                     break;
                 case 'K':
                     go = key;
@@ -171,6 +178,7 @@ public class BoardManager : MonoBehaviour
     public GameObject[] enemyTiles;
     public GameObject[] outerWallTiles;
     public GameObject key;
+    public GameObject sword;
     private Transform boardHolder;
     private List<Vector3> gridPositions = new List<Vector3>();
 
@@ -178,7 +186,8 @@ public class BoardManager : MonoBehaviour
     void Start()
     {
         string[] lines = new string[16];
-        string fileName = "Assets/Resources/Map.txt";
+        string fileName = "../Assets/Resources/Map.txt";
+        //string fileName = "Assets/Resources/Map.txt";
         string line = null;
         var reader = new System.IO.StreamReader(fileName);
         int l = 0;
@@ -192,7 +201,7 @@ public class BoardManager : MonoBehaviour
             l++;
             if(l % 8 == 0)
             {
-                rooms[roomCount] = new Room(roomCount.ToString(), c, floorTiles, wallTiles, foodTiles, enemyTiles, outerWallTiles, gate, exit, lockedWall, key);
+                rooms[roomCount] = new Room(roomCount.ToString(), c, floorTiles, wallTiles, foodTiles, enemyTiles, outerWallTiles, gate, exit, lockedWall, key, sword);
                 c = new char[8][];
                 cCount = 0;
                 roomCount++;

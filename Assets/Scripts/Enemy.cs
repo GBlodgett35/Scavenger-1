@@ -113,7 +113,7 @@ public class Enemy : MovingObject
         }
         //Declare hitPlayer and set it to equal the encountered component.
         Player hitPlayer = component as Player;
-
+        if (hitPlayer == null) return;
         //Call the LoseFood function of hitPlayer passing it playerDamage, the amount of foodpoints to be subtracted.
         hitPlayer.LoseFood(playerDamage);
 

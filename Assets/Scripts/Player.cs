@@ -25,7 +25,7 @@ public class Player : MovingObject
     private Animator animator;                  // Used to store a reference to the Player's animator component.
     private int food;                           // Used to store player food points total during level.
 
-
+    private int playerDamage = 5;
     //Start overrides the Start function of MovingObject
     protected override void Start()
     {
@@ -126,7 +126,7 @@ public class Player : MovingObject
         if(hitWall == null)
         {
             Enemy e = component as Enemy;
-            e.damage(5);
+            e.damage(playerDamage);
             return;
         }
         if(hitWall.gameObject.tag == "LockedWall")
@@ -191,6 +191,11 @@ public class Player : MovingObject
             SoundManager.instance.RandomizeSfx(drinkSound1, drinkSound2);
 
             //Disable the soda object the player collided with.
+            Destroy(other.gameObject);
+        }
+        else if(other.tag == "Sword")
+        {
+            playerDamage = 10;
             Destroy(other.gameObject);
         }
     }

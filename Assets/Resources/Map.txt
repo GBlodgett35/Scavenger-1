@@ -35,8 +35,8 @@ X     WX
 X  F   X
 X    Z X
 X W   WX
-X  Z   X
 X      X
+X  Z S X
 XXXXXXXX
 XXXX3XXX
 X  W   X

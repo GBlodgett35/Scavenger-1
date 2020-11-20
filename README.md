@@ -35,13 +35,13 @@ There are zombies in the maze that will attack the player and take away their fo
 7. The game should implement some method from the textbook's "Seven Methods of Indirect Guidance" from chapter 12 to help the player find the exit.
 The game does not need to save scores.
 
-Greg:
+Greg: (50%)
 - Reading text file and constructing board
 - Creating Key attribute and Locked wall
 - Enabled killing zombies
 - Point system
 
-Diege:
+Diege: (50%)
 - Main menu screen
 - Third Zombie
 - Indirect guidance (Doorways turn a different color after going through, which helps direct players to parts of the maze they haven't explored)
